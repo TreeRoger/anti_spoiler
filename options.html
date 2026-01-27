@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-Spoiler Blocker - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🛡️ Anti-Spoiler Blocker Settings</h1>
+    </header>
+    
+    <div class="section">
+      <h2>Blocking Mode</h2>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="blocking-mode" value="warning" checked>
+          <span>Show Warning Overlay</span>
+          <small>Display a warning overlay but allow continuing</small>
+        </label>
+        <label>
+          <input type="radio" name="blocking-mode" value="block">
+          <span>Block Completely</span>
+          <small>Redirect to blocked page</small>
+        </label>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Detection Sensitivity</h2>
+      <div class="slider-group">
+        <label>
+          <span>Low</span>
+          <input type="range" id="sensitivity" min="1" max="3" value="2">
+          <span>High</span>
+        </label>
+        <small id="sensitivity-value">Medium sensitivity</small>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Manage Shows</h2>
+      <div id="shows-list" class="shows-list">
+        <!-- Shows will be dynamically added here -->
+      </div>
+      
+      <div class="show-editor">
+        <h3>Edit Show Keywords</h3>
+        <select id="show-selector">
+          <option value="">Select a show...</option>
+        </select>
+        <div id="keywords-editor" style="display: none;">
+          <label>Keywords (comma-separated):</label>
+          <textarea id="keywords-input" placeholder="e.g., got, game of thrones, winter is coming"></textarea>
+          <button id="save-keywords">Save Keywords</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Export/Import</h2>
+      <div class="button-group">
+        <button id="export-btn">Export Settings</button>
+        <button id="import-btn">Import Settings</button>
+        <input type="file" id="import-file" accept=".json" style="display: none;">
+      </div>
+    </div>
+    
+    <div class="section">
+      <button id="reset-btn" class="danger-btn">Reset All Settings</button>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>
+
