@@ -9,7 +9,10 @@
 <body>
   <div class="container">
     <header>
-      <h1>🛡️ Anti-Spoiler Blocker</h1>
+      <div class="header-text">
+        <h1>🛡️ Anti-Spoiler Blocker</h1>
+        <p id="status-line" class="status-line">Off</p>
+      </div>
       <label class="toggle-switch">
         <input type="checkbox" id="enabled-toggle">
         <span class="slider"></span>
@@ -26,15 +29,17 @@
         <input 
           type="text" 
           id="show-name-input" 
-          placeholder="Enter show name (e.g., Game of Thrones)"
+          placeholder="e.g. Game of Thrones"
           required
         >
-        <button type="submit">Add Show</button>
+        <button type="submit">Add</button>
       </form>
     </div>
     
-    <div class="section">
-      <a href="options.html" target="_blank" class="settings-link">⚙️ Advanced Settings</a>
+    <div class="section section-footer">
+      <a href="options.html" target="_blank" class="settings-link">
+        <span class="settings-icon">⚙️</span> Settings
+      </a>
     </div>
   </div>
   

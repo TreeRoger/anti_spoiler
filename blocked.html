@@ -36,9 +36,15 @@
     }
     
     h1 {
-      color: #ff6b6b;
-      margin-bottom: 1rem;
+      color: #c0392b;
+      margin-bottom: 0.25rem;
       font-size: 2rem;
+    }
+    
+    .subtitle {
+      color: #888;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
     }
     
     p {
@@ -61,37 +67,52 @@
     
     .buttons {
       display: flex;
-      gap: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
       justify-content: center;
     }
     
-    button {
-      padding: 0.75rem 2rem;
-      border: none;
-      border-radius: 6px;
+    button,
+    .btn-secondary,
+    .btn-ghost {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
       font-weight: 600;
       transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      border: none;
+      font-family: inherit;
     }
     
     .btn-primary {
-      background: #ff6b6b;
+      background: #c0392b;
       color: white;
     }
     
     .btn-primary:hover {
-      background: #ff5252;
+      background: #a93226;
       transform: translateY(-1px);
     }
     
     .btn-secondary {
-      background: #e0e0e0;
+      background: #e8e8e8;
       color: #333;
     }
     
     .btn-secondary:hover {
-      background: #d0d0d0;
+      background: #ddd;
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: #666;
+    }
+    
+    .btn-ghost:hover {
+      color: #333;
     }
   </style>
 </head>
@@ -99,25 +120,35 @@
   <div class="container">
     <div class="icon">🛡️</div>
     <h1>Page Blocked</h1>
+    <p class="subtitle">Potential spoilers detected</p>
     <p>
-      This page has been blocked because it may contain spoilers for:
+      This page may contain spoilers for:
       <span class="show-name" id="show-name"></span>
     </p>
     <p class="url" id="blocked-url"></p>
     <div class="buttons">
       <button class="btn-primary" onclick="goBack()">Go Back</button>
-      <button class="btn-secondary" onclick="goToOptions()">Settings</button>
+      <a id="continue-link" href="#" class="btn-secondary">Continue anyway</a>
+      <button class="btn-ghost" onclick="goToOptions()">Settings</button>
     </div>
   </div>
   
   <script>
-    // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const blockedUrl = urlParams.get('url');
+    const blockedUrl = urlParams.get('url') || '';
     const showName = urlParams.get('show');
     
     document.getElementById('show-name').textContent = showName || 'a show you\'re watching';
-    document.getElementById('blocked-url').textContent = blockedUrl || '';
+    document.getElementById('blocked-url').textContent = blockedUrl;
+    
+    const continueLink = document.getElementById('continue-link');
+    if (blockedUrl) {
+      continueLink.href = blockedUrl;
+      continueLink.target = '_blank';
+      continueLink.rel = 'noopener noreferrer';
+    } else {
+      continueLink.style.display = 'none';
+    }
     
     function goBack() {
       window.history.back();

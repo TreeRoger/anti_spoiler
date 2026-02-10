@@ -15,6 +15,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const importBtn = document.getElementById('import-btn');
   const importFile = document.getElementById('import-file');
   const resetBtn = document.getElementById('reset-btn');
+  const backLink = document.getElementById('back-link');
+  
+  // Back link: close options tab (when opened from extension) or go back
+  if (backLink) {
+    backLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.close();
+      }
+    });
+  }
+
+  // Show toast message (replaces alert for success feedback)
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('visible');
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+      toast.classList.remove('visible');
+    }, 2500);
+  }
   
   // Initialize settings page
   loadSettings();
@@ -64,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (showIndex !== -1) {
         shows[showIndex].keywords = keywords;
         chrome.storage.local.set({ watchedShows: shows }, () => {
-          alert('Keywords saved!');
+          showToast('Keywords saved');
           loadShows();
         });
       }
@@ -99,11 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const data = JSON.parse(event.target.result);
         chrome.storage.local.set(data, () => {
-          alert('Settings imported successfully!');
+          showToast('Settings imported');
           loadSettings();
         });
       } catch (error) {
-        alert('Error importing settings: Invalid JSON file');
+        showToast('Invalid JSON file');
       }
     };
     reader.readAsText(file);
@@ -119,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
           blockingMode: 'warning',
           sensitivity: 2
         }, () => {
-          alert('Settings reset!');
+          showToast('Settings reset');
           loadSettings();
         });
       });
